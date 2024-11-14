@@ -53,6 +53,14 @@ namespace MarkMpn.XmlSchemaAutocomplete
 
         public bool UsesXsi { get; set; }
 
+        public static IEnumerable<XmlSchemaComplexType> GetDerivedTypes(XmlSchema schema, XmlSchemaType root)
+        {
+            return schema.SchemaTypes.Values
+                .OfType<XmlSchemaComplexType>()
+                .Where(type => type.BaseXmlSchemaType == root)
+                .SelectMany(child => GetDerivedTypes(schema, child).Concat(new[] { child }));
+        }
+
         public void AddTypeDescription(string typeName, string title, string description)
         {
             var type = _schemas.Schemas()
@@ -172,7 +180,7 @@ namespace MarkMpn.XmlSchemaAutocomplete
                 if (element.HasAttribute("xsi:type"))
                 {
                     var typeName = element.GetAttribute("xsi:type");
-                    Type = schemas.Schemas().Cast<XmlSchema>().SelectMany(schema => schema.SchemaTypes.Values.OfType<XmlSchemaComplexType>().Where(type => type.BaseXmlSchemaType == Type && type.Name == typeName)).FirstOrDefault() ?? Type;
+                    Type = schemas.Schemas().Cast<XmlSchema>().SelectMany(schema => GetDerivedTypes(schema, Type)).Where(type => type.Name == typeName).FirstOrDefault() ?? Type;
                 }
             }
 
@@ -486,7 +494,7 @@ namespace MarkMpn.XmlSchemaAutocomplete
                     // Special cases for xsi:type
 
                     // If this type has derived types, offer them too
-                    if (_schemas.Schemas().Cast<XmlSchema>().Any(schema => schema.SchemaTypes.Values.OfType<XmlSchemaComplexType>().Any(type => type.BaseXmlSchemaType == currentElement.Type)))
+                    if (_schemas.Schemas().Cast<XmlSchema>().Any(schema => GetDerivedTypes(schema, currentElement.Type).Any()))
                     {
                         suggestions.Insert(0, new AutocompleteAttributeSuggestion { Name = "xsi:type", Title = "Type", Description = "Indicates the derived type to use for this element" });
                     }
@@ -574,10 +582,7 @@ namespace MarkMpn.XmlSchemaAutocomplete
                         suggestions.AddRange(_schemas.Schemas()
                             .Cast<XmlSchema>()
                             .SelectMany(schema =>
-                                schema.SchemaTypes
-                                    .Values
-                                    .OfType<XmlSchemaComplexType>()
-                                    .Where(type => type.BaseXmlSchemaType == currentElement.Type)
+                                GetDerivedTypes(schema, currentElement.Type)
                                     .Select(type => new AutocompleteAttributeValueSuggestion(type))
                             )
                         );
