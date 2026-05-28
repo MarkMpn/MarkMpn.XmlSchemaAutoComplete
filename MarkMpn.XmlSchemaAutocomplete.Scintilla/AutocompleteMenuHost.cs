@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -8,9 +9,11 @@ namespace AutocompleteMenuNS
     internal class AutocompleteMenuHost : ToolStripDropDown
     {
         private IAutocompleteListView listView;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public ToolStripControlHost Host { get; set; }
         public readonly AutocompleteMenu Menu;
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IAutocompleteListView ListView 
         { 
             get { return listView; }

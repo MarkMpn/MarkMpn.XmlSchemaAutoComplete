@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -10,14 +11,17 @@ namespace AutocompleteMenuNS
     public class AutocompleteListView : UserControl, IAutocompleteListView
     {
         private readonly ToolTip toolTip = new ToolTip();
-        public int HighlightedItemIndex { get; set; }
         private int oldItemCount;
         private int selectedItemIndex = -1;
         private IList<AutocompleteItem> visibleItems;
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public int HighlightedItemIndex { get; set; }
+
         /// <summary>
         /// Duration (ms) of tooltip showing
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int ToolTipDuration { get; set; }
 
         /// <summary>
@@ -34,6 +38,7 @@ namespace AutocompleteMenuNS
         /// <summary>
         /// Colors
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Colors Colors { get; set; }
 
         internal AutocompleteListView()
@@ -61,6 +66,7 @@ namespace AutocompleteMenuNS
 
         private int itemHeight;
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int ItemHeight
         {
             get { return itemHeight; }
@@ -82,13 +88,19 @@ namespace AutocompleteMenuNS
             }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int LeftPadding { get; set; }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public ImageList ImageList { get; set; }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string[] ColumnsTitle { get; set; } = null;
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int[] ColumnsWidth { get; set; } = null;
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList<AutocompleteItem> VisibleItems
         {
             get { return visibleItems; }
@@ -101,6 +113,7 @@ namespace AutocompleteMenuNS
             }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int SelectedItemIndex
         {
             get { return selectedItemIndex; }

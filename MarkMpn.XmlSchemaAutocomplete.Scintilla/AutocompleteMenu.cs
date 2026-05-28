@@ -91,10 +91,12 @@ namespace AutocompleteMenuNS
         }
 
         [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int SelectedItemIndex { get { return Host.ListView.SelectedItemIndex; }
             internal set { Host.ListView.SelectedItemIndex = value; } 
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         internal AutocompleteMenuHost Host { get; set; }
 
         /// <summary>
@@ -129,6 +131,7 @@ namespace AutocompleteMenuNS
         /// Current target control wrapper
         /// </summary>
         [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public ITextBoxWrapper TargetControlWrapper
         {
             get { return targetControlWrapper; }
@@ -161,6 +164,7 @@ namespace AutocompleteMenuNS
         /// <summary>
         /// Font
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Font Font
         {
             get { return (Host.ListView as Control).Font; }
@@ -192,6 +196,7 @@ namespace AutocompleteMenuNS
         [Browsable(true)]
         [Description("Colors of foreground and background.")]
         [TypeConverter(typeof(ExpandableObjectConverter))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Colors Colors
         {
             get { return (Host.ListView as IAutocompleteListView).Colors; }
@@ -225,6 +230,7 @@ namespace AutocompleteMenuNS
         /// <summary>
         /// Image list
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public ImageList ImageList { 
             get { return Host.ListView.ImageList; }
             set { Host.ListView.ImageList = value; }
@@ -234,6 +240,7 @@ namespace AutocompleteMenuNS
         /// Fragment
         /// </summary>
         [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Range Fragment { get; internal set; }
 
         /// <summary>
@@ -284,6 +291,7 @@ namespace AutocompleteMenuNS
         /// Set to null for restore default ListView (AutocompleteListView).
         /// </summary>
         [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IAutocompleteListView ListView
         {
             get { return Host.ListView; }
